@@ -36,13 +36,10 @@ function addGamesToPage(games) {
                         <h1>${games[i].name}</h1>
                         <img class="game-img" src="${games[i].img}" alt="${games[i].name}">
                         <p>${games[i].description}</p>
+                        <p>The amount of money raised is <strong>${games[i].pledged}</strong></p>
+                        <p>The goal amount needed is <string>${games[i].goal}</strong></p>
                         `
-        
     }
-
-addGamesToPage(GAMES_JSON)
-    
-    
 
 
 
