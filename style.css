@@ -9,6 +9,8 @@ body {
     width: 50px;
 }
 
+
+
 .header {
     display: flex;
     background-color: lightblue;
@@ -21,6 +23,8 @@ body {
 
 .stats-container {
     display: flex;
+    align-items: flex-start;
+    cursor: pointer;
 }
 
 .stats-card {

@@ -29,6 +29,21 @@ const gamesContainer = document.getElementById("games-container");
 function addGamesToPage(games) {
 
     // loop over each item in the data
+    for (let i = 0; i < games.length; i++) {
+        const div = document.createElement("div")
+        div.classList.add("game-card")
+        div.innerHTML = `
+                        <h1>${games[i].name}</h1>
+                        <img class="game-img" src="${games[i].img}" alt="${games[i].name}">
+                        <p>${games[i].description}</p>
+                        `
+        
+    }
+
+addGamesToPage(GAMES_JSON)
+    
+    
+
 
 
         // create a new div element, which will become the game card
