@@ -152,13 +152,18 @@ allBtn.addEventListener("click", showAllGames)
 const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
-
-
+const totalUnfunded = GAMES_JSON.filter(game => game.pledged < game.goal).length;
 // create a string that explains the number of unfunded games using the ternary operator
+const totalMoney = GAMES_JSON.reduce( (acc, game) => {
+    return acc + game.pledged;
+}, 0)
 
+const statement = `<p>A total of $${totalMoney.toLocaleString('en-US')} has been raised for ${GAMES_JSON.length} games. Currently, ${totalUnfunded} ${totalUnfunded <= 1 ? "1 game remains unfunded." : "games remain unfunded."} We need your help to fund these amazing games!</p>`
 
 // create a new DOM element containing the template string and append it to the description container
-
+const myParagraph = document.createElement("p")
+myParagraph.innerHTML = statement;
+descriptionContainer.appendChild(myParagraph)
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
  * Skills used: spread operator, destructuring, template literals, sort 
@@ -171,8 +176,51 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
     return item2.pledged - item1.pledged;
 });
 
+
+
 // use destructuring and the spread operator to grab the first and second games
+let [first, second, ...others] = sortedGames
+
+// console.log(first.name)
+// console.log(second.name)
 
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 
+const firstPlace = document.createElement("div")
+firstPlace.innerHTML = `${first.name}`
+firstGameContainer.appendChild(firstPlace)
 // do the same for the runner up item
+
+const secondPlace = document.createElement("div");
+secondPlace.innerHTML = `${second.name}`;
+secondGameContainer.appendChild(secondPlace)
+
+
+//Search Feature to look for specific game in catalog
+function search_game(value){
+    //deleting the elements
+    deleteChildElements(gamesContainer);
+
+    //creating a list of games that contain the string entered in the search input field
+    let likelyGames = GAMES_JSON.filter( (game) => {
+        return game.name.includes(value)
+    })
+    //console.log(likelyGames)
+
+    //If there are no games in the array then it will show a no results in the games container
+    if (likelyGames.length == 0){
+        const noresult = document.createElement("div")
+        noresult.innerHTML = `<h4>No results</h4>`
+        gamesContainer.appendChild(noresult)
+    } else {
+        //If there are any games in the array it will display the games in the games container
+        addGamesToPage(likelyGames)
+    }
+}
+
+//getting the button id and only doing the search game function when the search button is clicked
+const search_btn = document.getElementById("search-submit")
+search_btn.addEventListener("click", () => {
+    let search_box_value = document.getElementById("search-box").value;
+    search_game(search_box_value);
+})
